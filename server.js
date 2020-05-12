@@ -13,6 +13,7 @@ const Router = require('koa-router');
 const { registerWebhook, receiveWebhook } = require('@shopify/koa-shopify-webhooks');
 
 const getSubscriptionUrl = require('./server/getSubscriptionUrl');
+const changeActivationMetafieldStatus = require('./server/changeActivationMetafieldStatus');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -70,8 +71,27 @@ app.prepare().then(() => {
     console.log('received product create webhook: ', ctx.state.webhook);
   });
 
+  router.put('/enable', verifyRequest(), async (ctx) => {
+    const { shop, accessToken } = ctx.session;
+
+    const enable = true;
+
+    ctx.body = await changeActivationMetafieldStatus(ctx, accessToken, shop, enable);
+    ctx.res.statusCode = 200;
+  });
+
+  router.put('/disable', verifyRequest(), async (ctx) => {
+    const { shop, accessToken } = ctx.session;
+
+    const enable = false;
+
+    ctx.body = await changeActivationMetafieldStatus(ctx, accessToken, shop, enable);
+    ctx.res.statusCode = 200;
+  });
+
   server.use(graphQLProxy({ version: API_VERSION }));
   router.get('*', verifyRequest(), async (ctx) => {
+    console.log('verified request', ctx.req.url);
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;

@@ -21,7 +21,7 @@ class App extends NextApp {
     const config = {
       apiKey: API_KEY,
       shopOrigin: Cookies.get('shopOrigin'),
-      forceRedirect: true,
+      forceRedirect: false,
     };
 
     return (
