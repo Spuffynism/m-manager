@@ -19,7 +19,8 @@ const updateExistingMetafield = async (ctx, accessToken, shop, metafieldId, enab
 };
 
 const changeActivationMetafieldStatus = async (ctx, accessToken, shop, enable) => {
-  const metafield = await fetchActivationMetafield(ctx, accessToken, shop);
+  const response = await fetchActivationMetafield(ctx, accessToken, shop);
+  const metafield = response.metafields[0];
 
   return metafield
     ? await updateExistingMetafield(ctx, accessToken, shop, metafield.id, enable)

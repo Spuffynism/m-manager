@@ -71,8 +71,6 @@ class Settings extends React.Component {
             enabled: activationMetafield?.node?.value === 'true' || false,
             hasFetchedSettings: true,
           }));
-
-          console.log(activationMetafield, data);
         }}
       >
         {({ data, loading, error }) => {
@@ -131,7 +129,6 @@ class Settings extends React.Component {
     this.setState((state) => ({
       message: state.message,
     }));
-    console.log('submission', this.state);
   };
 
   handleChange = (field) => {
@@ -148,9 +145,9 @@ class Settings extends React.Component {
 
     const response = await request.json();
 
-    this.setState(({ enabled, loading }) => {
+    this.setState(() => {
       return {
-        enabled: !enabled,
+        enabled: response.metafield.value === 'true',
         loading: false,
       };
     });

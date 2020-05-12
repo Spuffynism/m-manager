@@ -15,7 +15,7 @@ const fetchActivationMetafield = async (ctx, accessToken, shop) => {
     },
   });
 
-  return await request.json().body;
+  return await request.json();
 };
 
 module.exports = fetchActivationMetafield;
