@@ -12,7 +12,7 @@ Create a .env file with this structure:
 SHOPIFY_API_KEY=KEY
 SHOPIFY_API_SECRET_KEY=SECRET
 HOST='HTTPS_URL'
-API_VERSION='YEAR-MONTH'
+API_VERSION='YYYY-MM'
 ```
 
 ## Install
