@@ -1,4 +1,4 @@
-const createActivationMetafield = async (ctx, accessToken, shop) => {
+const createActivationMetafield = async (accessToken, shop) => {
   const request = await fetch(`https://${shop}/admin/api/${process.env.API_VERSION}/metafields.json`, {
     method: 'POST',
     headers: {

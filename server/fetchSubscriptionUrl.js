@@ -1,8 +1,13 @@
-const getSubscriptionUrl = async (ctx, accessToken, shop) => {
+/**
+ * @param accessToken
+ * @param shop
+ * @returns {String}
+ */
+const fetchSubscriptionUrl = async (accessToken, shop) => {
   const appSubscriptionCreateQuery = JSON.stringify({
     query: `mutation {
       appSubscriptionCreate(
-          name: "Super Duper Plan"
+          name: "Test plan"
           returnUrl: "${process.env.HOST}"
           test: true
           lineItems: [
@@ -10,7 +15,7 @@ const getSubscriptionUrl = async (ctx, accessToken, shop) => {
             plan: {
               appUsagePricingDetails: {
                   cappedAmount: { amount: 10, currencyCode: USD }
-                  terms: "$1 for 1000 emails"
+                  terms: "$1 for 1000 properties"
               }
             }
           }
@@ -29,6 +34,7 @@ const getSubscriptionUrl = async (ctx, accessToken, shop) => {
             }
             confirmationUrl
             appSubscription {
+              status
               id
             }
         }
@@ -44,11 +50,14 @@ const getSubscriptionUrl = async (ctx, accessToken, shop) => {
     body: appSubscriptionCreateQuery
   });
 
-  // TODO(nich): Handle subscription call error
   const responseJson = await response.json();
-  const confirmationUrl = responseJson.data.appSubscriptionCreate.confirmationUrl;
 
-  return ctx.redirect(confirmationUrl);
+  console.log('subscription response', responseJson.data.appSubscriptionCreate.userErrors);
+
+  const subscription = responseJson.data.appSubscriptionCreate;
+
+  console.log('subscription', subscription.appSubscription);
+  return subscription.confirmationUrl;
 };
 
-module.exports = getSubscriptionUrl;
+module.exports = fetchSubscriptionUrl;

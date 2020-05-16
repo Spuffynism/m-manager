@@ -1,7 +1,7 @@
 const fetchActivationMetafield = require('./fetchActivationMetafield');
 const createActivationMetafield = require('./createActivationMetafield');
 
-const updateExistingMetafield = async (ctx, accessToken, shop, metafieldId, enable) => {
+const updateExistingMetafield = async (accessToken, shop, metafieldId, enable) => {
   const request = await fetch(`https://${shop}/admin/api/${process.env.API_VERSION}/metafields/${metafieldId}.json`, {
     method: 'put',
     headers: {
@@ -18,13 +18,12 @@ const updateExistingMetafield = async (ctx, accessToken, shop, metafieldId, enab
   return request.json();
 };
 
-const changeActivationMetafieldStatus = async (ctx, accessToken, shop, enable) => {
-  const response = await fetchActivationMetafield(ctx, accessToken, shop);
-  const metafield = response.metafields[0];
+const changeActivationMetafieldStatus = async (accessToken, shop, enable) => {
+  const metafield = await fetchActivationMetafield( accessToken, shop);
 
   return metafield
-    ? await updateExistingMetafield(ctx, accessToken, shop, metafield.id, enable)
-    : await createActivationMetafield(ctx, accessToken, shop);
+    ? await updateExistingMetafield(accessToken, shop, metafield.id, enable)
+    : await createActivationMetafield(accessToken, shop);
 };
 
 module.exports = changeActivationMetafieldStatus;
