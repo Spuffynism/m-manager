@@ -50,7 +50,7 @@ module.exports = app.prepare()
         async afterAuth(ctx) {
           const { shop, accessToken } = ctx.session;
 
-          //await shopService.registerNewShop(shop);
+          await shopService.registerNewShop(shop);
 
           const registration = await registerWebhook({
             address: `${HOST}/webhooks/products/create`,
