@@ -22,24 +22,10 @@ const GET_SHOP_APP_METAFIELDS = gql`
       metafields(first: 10, namespace: "property_manager_936") {
         edges {
           node {
-            key,
+            key
             value
           }  
         }
-      }
-    }
-  }
-`;
-
-const ENABLE_APP = gql`
-  mutation productVariantUpdate($input: ProductVariantInput!) {
-    productVariantUpdate(input: $input) {
-      product {
-        title
-      }
-      productVariant {
-        id
-        price
       }
     }
   }

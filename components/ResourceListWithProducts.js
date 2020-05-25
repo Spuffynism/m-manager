@@ -11,7 +11,6 @@ const GET_PRODUCTS_BY_ID = gql`
       ... on Product {
         title
         handle
-        descriptionHtml
         id
         images(first: 1) {
           edges {
@@ -21,13 +20,8 @@ const GET_PRODUCTS_BY_ID = gql`
             }
           }
         }
-        variants(first: 1) {
-          edges {
-            node {
-              price
-              id
-            }
-          }
+        metafield(key: "properties", namespace: "property_manager_936") {
+          value
         }
       }
     }
@@ -54,8 +48,6 @@ class ResourceListWithProducts extends React.Component {
         '/edit-products'
       );
     };
-
-    const twoWeeksFromNow = new Date(new Date() + ((7 * 2) * 24 * 60 * 60 * 1000)).toDateString();
 
     return (
       <Query query={GET_PRODUCTS_BY_ID} variables={{
@@ -84,7 +76,6 @@ class ResourceListWithProducts extends React.Component {
                       }
                     />
                   );
-                  const price = item.variants.edges[0].node.price;
                   return (
                     <ResourceList.Item
                       id={item.id}
@@ -104,10 +95,7 @@ class ResourceListWithProducts extends React.Component {
                           </h3>
                         </Stack.Item>
                         <Stack.Item>
-                          <p>${price}</p>
-                        </Stack.Item>
-                        <Stack.Item>
-                          <p>Has properties metafield? : {item.metafield ? 'yes' : 'no'}</p>
+                          <p>Has properties metafield? : {item?.metafield?.value ? 'yes' : 'no'}</p>
                         </Stack.Item>
                       </Stack>
                     </ResourceList.Item>

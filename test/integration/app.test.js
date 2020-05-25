@@ -6,7 +6,7 @@ const url = require('url');
 
 const appPromise = require('../../server');
 
-describe('app', async () => {
+describe('base routes', async () => {
   let app,
     agent;
 

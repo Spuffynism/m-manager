@@ -50,7 +50,7 @@ module.exports = app.prepare()
         async afterAuth(ctx) {
           const { shop, accessToken } = ctx.session;
 
-          await shopService.registerNewShop(shop);
+          await shopService.registerIfNotAlreadyRegistered(shop);
 
           const registration = await registerWebhook({
             address: `${HOST}/webhooks/products/create`,
@@ -109,7 +109,6 @@ module.exports = app.prepare()
 
     // all
     router.get('*', verifyRequest(), async (ctx) => {
-      console.log('verified request', ctx.req.url);
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
       ctx.res.statusCode = 200;
