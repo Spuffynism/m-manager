@@ -1,27 +1,26 @@
-# Running
+# m-manager
 
-## app
+## Running app
+
 npm run dev
 
-## heroku
+## Running on heroku
 
 heroku local web --port=3000
 
-## database
-
-### Creating database
+## Creating database
 
 1. Install postgresql
 2. Start postgresql
 3. `npm run migrate:up`
 
-### Start
+## Starting database
 
-c:/Program\ Files/PostgreSQL/12/bin/pg_ctl.exe -D "C:\Program Files\PostgreSQL\12\data" start
+./pg_ctl -D "C:\Program Files\PostgreSQL\12\data" start
 
-### Stop
+## Stopping database
 
-c:/Program\ Files/PostgreSQL/12/bin/pg_ctl.exe -D "C:\Program Files\PostgreSQL\12\data" stop
+./pg_ctl -D "C:\Program Files\PostgreSQL\12\data" start
 
 ## Setup
 
@@ -46,7 +45,7 @@ https://github.com/zeit/next.js/issues/1300#issuecomment-282910431
 
 ## Install
 
-https://c91db50c.ngrok.io/auth?shop=9362.myshopify.com
+`<ngrok_url>/auth?shop=9362.myshopify.com`
 
 ### Next steps
 
@@ -78,6 +77,4 @@ https://c91db50c.ngrok.io/auth?shop=9362.myshopify.com
 - Write some more integration tests
 - Detect when app is already installed
 - Do routing locally - without rendering it server-side
-
-
-Writing unit tests is left as an exercise to the reader.
+- Complete readme instructions
